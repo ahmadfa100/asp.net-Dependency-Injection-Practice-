@@ -1,0 +1,5 @@
+@baseUrl = https://localhost:7001
+
+### Get all items
+GET {{baseUrl}}/weather/city/London
+Content-Type: application/json
