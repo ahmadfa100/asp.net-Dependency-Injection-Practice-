@@ -3,6 +3,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddWeatherServices();
 
+/*
+Service Descriptor
+
+builder.Services.Add(new ServiceDescriptor(
+    typeof(IWeatherService),
+    typeof(WeatherService),
+    ServiceLifetime.Transient
+
+    it's same of builder.Services.AddTransient<IWeatherService, WeatherService>();
+    but it's more customizable (you can use factory methods, etc)
+));
+
+*/
 var app = builder.Build();
 app.MapGet("/weather/city/{cityName}", (string cityName, IWeatherService weatherService, ILogger<Program> logger) =>
 {
