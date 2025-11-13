@@ -1,14 +1,15 @@
 using System.Net;
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
 
 builder.Services.AddTransient<IWeatherClient, WeatherClient>();
 builder.Services.AddTransient<IWeatherService, WeatherService>();
-app.MapGet("/weather/city/{cityName}", (string cityName, IWeatherService weatherService) =>
-{
-    
 
+var app = builder.Build();
+app.MapGet("/weather/city/{cityName}", (string cityName, IWeatherService weatherService, ILogger<Program> logger) =>
+{
+    logger.LogInformation("Fetching weather info for city: {CityName}", cityName);
     string ? weatherInfo = weatherService.GetWeatherInfo(cityName);
+    logger.LogInformation("Fetched weather info for city: {CityName}", cityName);
     return Results.Ok(weatherInfo);
 });
 
