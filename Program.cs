@@ -1,8 +1,7 @@
 using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddTransient<IWeatherClient, WeatherClient>();
-builder.Services.AddTransient<IWeatherService, WeatherService>();
+builder.Services.AddWeatherServices();
 
 var app = builder.Build();
 app.MapGet("/weather/city/{cityName}", (string cityName, IWeatherService weatherService, ILogger<Program> logger) =>
