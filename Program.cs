@@ -2,10 +2,11 @@ using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/weather/city/{cityName}", (string cityName) =>
+builder.Services.AddTransient<IWeatherClient, WeatherClient>();
+builder.Services.AddTransient<IWeatherService, WeatherService>();
+app.MapGet("/weather/city/{cityName}", (string cityName, IWeatherService weatherService) =>
 {
-    IWeatherService weatherService = new WeatherService(new WeatherClient());
-    IWeatherClient weatherClient = new WeatherClient();
+    
 
     string ? weatherInfo = weatherService.GetWeatherInfo(cityName);
     return Results.Ok(weatherInfo);
